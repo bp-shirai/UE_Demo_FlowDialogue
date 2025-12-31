@@ -65,9 +65,12 @@ UFlowNodeBase* UFlowGraphNode::GetFlowNodeBase() const
 	{
 		if (const UFlowNode* FlowNode = Cast<UFlowNode>(NodeInstance))
 		{
-			if (const UFlowAsset* InspectedInstance = FlowNode->GetFlowAsset()->GetInspectedInstance())
+			if (const UFlowAsset* FlowAsset = FlowNode->GetFlowAsset())
 			{
-				return InspectedInstance->GetNode(FlowNode->GetGuid());
+				if (const UFlowAsset* InspectedInstance = FlowAsset->GetInspectedInstance())
+				{
+					return InspectedInstance->GetNode(FlowNode->GetGuid());
+				}
 			}
 		}
 
@@ -834,6 +837,46 @@ bool UFlowGraphNode::SupportsCommentBubble() const
 	}
 
 	return Super::SupportsCommentBubble();
+}
+
+void UFlowGraphNode::OnNodeDoubleClicked() const
+{
+	UFlowNodeBase* FlowNodeBase = GetFlowNodeBase();
+	if (IsValid(FlowNodeBase))
+	{
+		if (UFlowGraphEditorSettings::Get()->NodeDoubleClickTarget == EFlowNodeDoubleClickTarget::NodeDefinition)
+		{
+			JumpToDefinition();
+		}
+		else
+		{
+			FString AssetPath;
+			UObject* AssetToEdit = nullptr;
+			if (UFlowNode* FlowNode = Cast<UFlowNode>(FlowNodeBase))
+			{
+				AssetPath = FlowNode->GetAssetPath();
+				AssetToEdit = FlowNode->GetAssetToEdit();
+			}
+
+			if (!AssetPath.IsEmpty())
+			{
+				GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(AssetPath);
+			}
+			else if (AssetToEdit)
+			{
+				GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(AssetToEdit);
+
+				if (GEditor->PlayWorld != nullptr)
+				{
+					OnNodeDoubleClickedInPIE();
+				}
+			}
+			else if (UFlowGraphEditorSettings::Get()->NodeDoubleClickTarget == EFlowNodeDoubleClickTarget::PrimaryAssetOrNodeDefinition)
+			{
+				JumpToDefinition();
+			}
+		}
+	}
 }
 
 void UFlowGraphNode::CreateInputPin(const FFlowPin& FlowPin, const int32 Index /*= INDEX_NONE*/)
