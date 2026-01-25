@@ -3,7 +3,7 @@
 #include "Sequence/Event/OmegaLinearEvent.h"
 
 #include "Engine/GameInstance.h"
-//#include "Subsystems/OmegaSubsystem_GameManager.h"
+#include "Subsystems/OmegaSubsystem_GameManager.h"
 
 UOmegaLinearEvent::UOmegaLinearEvent(const FObjectInitializer& ObjectInitializer)
 {
@@ -45,8 +45,8 @@ void UOmegaLinearEvent::Native_Begin(const FString& Flag)
     EventBegin.Broadcast(this, Flag);
     if (WorldPrivate)
     {
-        //WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnGlobalEvent.AddDynamic(this, &UOmegaLinearEvent::OnGlobalEvent_Named);
-        //WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnTaggedGlobalEvent.AddDynamic(this, &UOmegaLinearEvent::OnGlobalEvent_Tagged);
+        WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnGlobalEvent.AddDynamic(this, &ThisClass::OnGlobalEvent_Named);
+        WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnTaggedGlobalEvent.AddDynamic(this, &ThisClass::OnGlobalEvent_Tagged);
     }
     OnEventBegin(Flag);
 }
@@ -55,8 +55,8 @@ void UOmegaLinearEvent::Finish(const FString& Flag, const FName JumpToID)
 {
     if (WorldPrivate)
     {
-        //WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnGlobalEvent.RemoveDynamic(this, &UOmegaLinearEvent::OnGlobalEvent_Named);
-        //WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnTaggedGlobalEvent.RemoveDynamic(this, &UOmegaLinearEvent::OnGlobalEvent_Tagged);
+        WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnGlobalEvent.RemoveDynamic(this, &ThisClass::OnGlobalEvent_Named);
+        WorldPrivate->GetGameInstance()->GetSubsystem<UOmegaGameManager>()->OnTaggedGlobalEvent.RemoveDynamic(this, &ThisClass::OnGlobalEvent_Tagged);
     }
     IncomingEventID = JumpToID;
     OnEventEnd(Flag);

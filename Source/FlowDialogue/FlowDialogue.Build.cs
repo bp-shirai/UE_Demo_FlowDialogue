@@ -20,6 +20,12 @@ public class FlowDialogue : ModuleRules
 		{
 			"EnhancedInput",
 			"UMG",
+			"Slate",
+			"SlateCore",
+			"GameplayTags",
+			"AIModule",
+			"DeveloperSettings",
+			"CommonInput"
 		});
 
 		// Uncomment if you are using Slate UI

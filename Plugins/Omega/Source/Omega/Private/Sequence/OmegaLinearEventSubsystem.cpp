@@ -107,22 +107,22 @@ void UOmegaLinearEventSubsystem::RegisterQueuedLinearEventSource(UObject* Source
 FLinearEventSequence UOmegaLinearEventSubsystem::GetLinearEventsFromQueueKey(const FString& Key)
 {
     FLinearEventSequence out;
-    TArray<FQueuedLinearEventData> all_guidslot_data;
+    TArray<FQueuedLinearEventData> AllGuidSlotData;
 
     for (auto* TempSource : Queued_event_sources)
     {
-        all_guidslot_data.Append(IQueuedLinearEventInterface::Execute_GetQueuedLinearEvents(TempSource, Key));
+        AllGuidSlotData.Append(IQueuedLinearEventInterface::Execute_GetQueuedLinearEvents(TempSource, Key));
     }
 
-    // Sort 'all_guidslot_data' by the 'priority' field
-    Algo::Sort(all_guidslot_data, [](const FQueuedLinearEventData& A, const FQueuedLinearEventData& B)
+    // Sort 'AllGuidSlotData' by the 'priority' field
+    Algo::Sort(AllGuidSlotData, [](const FQueuedLinearEventData& A, const FQueuedLinearEventData& B)
                {
                    return A.priority < B.priority; // Sort in ascending order of priority
                });
 
-    for (FQueuedLinearEventData event_data : all_guidslot_data)
+    for (FQueuedLinearEventData EventData : AllGuidSlotData)
     {
-        out.Events.Append(event_data.Events.Events);
+        out.Events.Append(EventData.Events.Events);
     }
 
     return out;

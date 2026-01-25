@@ -80,7 +80,7 @@ enum class EOmegaGamepad_Shoulder : uint8
 UENUM(Blueprintable)
 enum EOmegaQuestStatus
 {
-    Unstarted UMETA(DisplayName = "Unstarted"),
+    UnStarted UMETA(DisplayName = "UnStarted"),
     Active UMETA(DisplayName = "Active"),
     Complete UMETA(DisplayName = "Complete"),
     Failed UMETA(DisplayName = "Failed"),

@@ -27,7 +27,8 @@ public class Omega : ModuleRules
 			{
 				"Core",
 				"CoreUObject",
-				"Engine"
+				"Engine",
+			
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -40,11 +41,17 @@ public class Omega : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"UMG",
 				"Projects",
 				"AssetRegistry",
 				"GameplayTags",
 				"PropertyPath",
 				"DeveloperSettings",
+				"InputCore",
+				"EnhancedInput",
+				"CommonInput",
+				"CommonUI",
+				"AIModule",
 				"Flow"
 				// ... add private dependencies that you statically link with here ...	
 			}

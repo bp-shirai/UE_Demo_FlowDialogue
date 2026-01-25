@@ -66,10 +66,10 @@ struct FOmegaQuestData
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
-    TEnumAsByte<EOmegaQuestStatus> Status;
+    TEnumAsByte<EOmegaQuestStatus> Status{EOmegaQuestStatus::UnStarted};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
-    int32 state;
+    int32 state{0};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Quest")
     TMap<FGameplayTag, int32> params_int;
@@ -91,10 +91,10 @@ struct FOmega_CameraConfig
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
-    bool invertX;
+    bool invertX{false};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
-    bool invertY;
+    bool invertY{false};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
     float scale = 1.0;

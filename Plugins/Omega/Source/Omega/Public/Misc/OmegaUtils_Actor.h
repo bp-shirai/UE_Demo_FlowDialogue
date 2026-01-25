@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "OmegaUtils_Actor.generated.h"
 
 USTRUCT(Blueprintable, BlueprintType)
@@ -13,7 +14,7 @@ struct FOmegaActorSelectorData
 
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Category = "Actor Selector")
-    UOmegaActorSelector* Selector;
+    UOmegaActorSelector* Selector{ nullptr };
 };
 
 UCLASS()
